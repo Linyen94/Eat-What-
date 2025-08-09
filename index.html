@@ -31,8 +31,12 @@
       cursor: pointer;
       transition: background-color 0.2s;
     }
-    button:hover {
+    button:hover:enabled {
       background-color: #ff5722;
+    }
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
     }
     .result {
       margin-top: 40px;
@@ -51,32 +55,33 @@
 
   <h1>🍜 現在要吃什麼？</h1>
   <p>按下按鈕，AI 幫你決定今天吃啥！</p>
-  <button id="decideBtn">決定！</button>
+  <button id="decideBtn" disabled>載入中...</button>
 
   <div class="result" id="result"></div>
   <img id="foodImage" src="" alt="" style="display:none;">
 
-<script>
-    let foods = [];  // 用於儲存從 JSON 載入的菜單資料
+  <script>
+    let foods = [];
+    const btn = document.getElementById('decideBtn');
 
-    // 載入 menu.json 並將資料存入 foods 陣列
-    fetch('Menu.json')
+    // 載入菜單 JSON
+    fetch('menu.json')
       .then(response => response.json())
       .then(data => {
         foods = data;
+        btn.disabled = false;
+        btn.textContent = '決定！';
       })
       .catch(error => {
         console.error('載入菜單失敗:', error);
+        btn.textContent = '載入失敗';
       });
 
-    // 監聽按鈕點擊事件，改為透過 addEventListener 綁定
-    document.getElementById('decideBtn').addEventListener('click', () => {
+    btn.addEventListener('click', () => {
       if (foods.length === 0) {
-        // 如果菜單還沒載入完成，可以顯示提示
         alert('菜單資料尚未載入，請稍候再試！');
         return;
       }
-      // 隨機選一個菜單項目
       const randomFood = foods[Math.floor(Math.random() * foods.length)];
       document.getElementById('result').textContent = randomFood.name;
       const foodImg = document.getElementById('foodImage');
