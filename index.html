@@ -65,6 +65,7 @@
     const btn = document.getElementById('decideBtn');
 
     // 載入菜單 JSON
+    /*
     fetch('./menu.json')
       .then(response => response.json())
       .then(data => {
@@ -88,6 +89,28 @@
       foodImg.src = randomFood.img + "?auto=format&fit=crop&w=800&q=80";
       foodImg.style.display = "block";
     });
+    */
+    fetch('./menu.json')
+  .then(response => {
+    console.log('fetch response:', response);
+    if (!response.ok) throw new Error('HTTP錯誤，狀態碼: ' + response.status);
+    return response.json();
+  })
+  .then(data => {
+    console.log('JSON資料:', data);
+    foods = data;
+    btn.disabled = false;
+    btn.textContent = '決定！';
+  })
+  .catch(error => {
+    console.error('載入菜單失敗:', error);
+    btn.textContent = '載入失敗';
+    // 顯示錯誤在頁面
+    const errorDiv = document.createElement('div');
+    errorDiv.style.color = 'red';
+    errorDiv.textContent = '載入菜單失敗：' + error.message;
+    document.body.appendChild(errorDiv);
+  });
   </script>
 
 </body>
