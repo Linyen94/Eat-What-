@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>現在要吃什麼？</title>
+  <style>
+    body {
+      font-family: "Microsoft JhengHei", sans-serif;
+      background-color: #fff8f0;
+      text-align: center;
+      padding: 50px;
+      color: #333;
+    }
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 1.2em;
+      color: #777;
+    }
+    button {
+      margin-top: 30px;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      background-color: #ff7043;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    button:hover {
+      background-color: #ff5722;
+    }
+    .result {
+      margin-top: 40px;
+      font-size: 2em;
+      font-weight: bold;
+      color: #d84315;
+    }
+    img {
+      max-width: 300px;
+      margin-top: 20px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🍜 現在要吃什麼？</h1>
+  <p>按下按鈕，AI 幫你決定今天吃啥！</p>
+  <button onclick="pickFood()">決定！</button>
+
+  <div class="result" id="result"></div>
+  <img id="foodImage" src="" alt="" style="display:none;">
+
+  <script>
+    const foods = [
+      { name: "滷肉飯", img: "https://images.unsplash.com/photo-1631515243302-28e01ecbb6fd" },
+      { name: "牛肉麵", img: "https://images.unsplash.com/photo-1604909053284-75f74b37f7dd" },
+      { name: "珍珠奶茶", img: "https://images.unsplash.com/photo-1572331165267-854da4e3b7d6" },
+      { name: "鹽酥雞", img: "https://images.unsplash.com/photo-1617196038068-cf0e6e7a8792" },
+      { name: "壽司", img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c" },
+      { name: "泡麵加蛋", img: "https://images.unsplash.com/photo-1590080875631-caf6984ddc5f" },
+      // 搞笑模式
+      { name: "隔壁阿伯的泡麵", img: "https://images.unsplash.com/photo-1605470205169-fd7cebd1b684" },
+      { name: "空氣減肥餐", img: "https://images.unsplash.com/photo-1581868164901-b3c9c28297c6" },
+      { name: "冰箱裡最可怕的東西", img: "https://images.unsplash.com/photo-1591348276751-abbcb1f1b25a" }
+    ];
+
+    function pickFood() {
+      const randomFood = foods[Math.floor(Math.random() * foods.length)];
+      document.getElementById("result").textContent = randomFood.name;
+      const foodImg = document.getElementById("foodImage");
+      foodImg.src = randomFood.img + "?auto=format&fit=crop&w=800&q=80";
+      foodImg.style.display = "block";
+    }
+  </script>
+
+</body>
+</html>
