@@ -56,27 +56,33 @@
   <div class="result" id="result"></div>
   <img id="foodImage" src="" alt="" style="display:none;">
 
-  <script>
-    const foods = [
-      { name: "滷肉飯", img: "https://images.unsplash.com/photo-1631515243302-28e01ecbb6fd" },
-      { name: "牛肉麵", img: "https://images.unsplash.com/photo-1604909053284-75f74b37f7dd" },
-      { name: "珍珠奶茶", img: "https://images.unsplash.com/photo-1572331165267-854da4e3b7d6" },
-      { name: "鹽酥雞", img: "https://images.unsplash.com/photo-1617196038068-cf0e6e7a8792" },
-      { name: "壽司", img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c" },
-      { name: "泡麵加蛋", img: "https://images.unsplash.com/photo-1590080875631-caf6984ddc5f" },
-      // 搞笑模式
-      { name: "隔壁阿伯的泡麵", img: "https://images.unsplash.com/photo-1605470205169-fd7cebd1b684" },
-      { name: "空氣減肥餐", img: "https://images.unsplash.com/photo-1581868164901-b3c9c28297c6" },
-      { name: "冰箱裡最可怕的東西", img: "https://images.unsplash.com/photo-1591348276751-abbcb1f1b25a" }
-    ];
+<script>
+    let foods = [];  // 用於儲存從 JSON 載入的菜單資料
 
-    function pickFood() {
+    // 載入 menu.json 並將資料存入 foods 陣列
+    fetch('menu.json')
+      .then(response => response.json())
+      .then(data => {
+        foods = data;
+      })
+      .catch(error => {
+        console.error('載入菜單失敗:', error);
+      });
+
+    // 監聽按鈕點擊事件，改為透過 addEventListener 綁定
+    document.getElementById('decideBtn').addEventListener('click', () => {
+      if (foods.length === 0) {
+        // 如果菜單還沒載入完成，可以顯示提示
+        alert('菜單資料尚未載入，請稍候再試！');
+        return;
+      }
+      // 隨機選一個菜單項目
       const randomFood = foods[Math.floor(Math.random() * foods.length)];
-      document.getElementById("result").textContent = randomFood.name;
-      const foodImg = document.getElementById("foodImage");
+      document.getElementById('result').textContent = randomFood.name;
+      const foodImg = document.getElementById('foodImage');
       foodImg.src = randomFood.img + "?auto=format&fit=crop&w=800&q=80";
       foodImg.style.display = "block";
-    }
+    });
   </script>
 
 </body>
